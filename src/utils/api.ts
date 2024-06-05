@@ -20,7 +20,7 @@ export const patchSaleProduct = async (
   dataBody: MessageProduct,
   functionDataOk: () => void
 ): Promise<any> => {
-  const swalConten = await Swal.fire({
+  const swalContent = await Swal.fire({
     title: "Vender producto",
     showCancelButton: true,
     cancelButtonText: "Cancelar",
@@ -28,7 +28,7 @@ export const patchSaleProduct = async (
     confirmButtonColor: "#3ae248",
   });
   try {
-    if (swalConten.isConfirmed) {
+    if (swalContent.isConfirmed) {
       console.log("is in is");
       const response = await fetch(pathForResponse, {
         method: "PATCH",
@@ -75,7 +75,7 @@ export const patchEditVal = async (
     });
 
     console.log(response);
-    
+
     if (response.ok) {
       functionDataOk();
 
@@ -142,14 +142,14 @@ export const deleteRemoveData = async (
   modifyName: string,
   dataTitleSwal: string
 ): Promise<any> => {
-  const swalConten = await Swal.fire({
+  const swalContent = await Swal.fire({
     title: dataTitleSwal,
     showCancelButton: true,
     cancelButtonText: "Cancelar",
     confirmButtonText: "Eliminar",
     confirmButtonColor: "#DC3741",
   });
-  if (swalConten.isConfirmed) {
+  if (swalContent.isConfirmed) {
     try {
       const response = await fetch(pathForResponse, {
         method: "DELETE",

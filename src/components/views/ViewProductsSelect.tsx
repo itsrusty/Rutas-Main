@@ -76,6 +76,19 @@ export default function ViewProductsSelect({
                 value={product.productPrice ?? 0}
               />
             </div>
+
+            <div className="flex items-center gap-1 font-bold text-xl">
+              {/* precio producto */}
+              <input
+                type="number"
+                className="flex gap-2 w-32 text-center p-2 border rounded-xl outline-none "
+                min={0}
+                onChange={(e) =>
+                  handleUpdateProductSelect(index, parseInt(e.target.value))
+                }
+                value={product.productPrice ?? 0}
+              />
+            </div>
           </div>
         ))}
     </div>

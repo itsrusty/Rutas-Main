@@ -14,7 +14,11 @@ import { MessageStores, ProductsInStores } from "@/types/stores";
 import StoreForm from "@/components/forms/StoreForm";
 import Link from "next/link";
 
-export default function UtilsProducts({ params }: { params: { storeId: string } }) {
+export default function UtilsProducts({
+  params,
+}: {
+  params: { storeId: string };
+}) {
   const { storeId } = params;
 
   console.log(storeId);
@@ -98,37 +102,36 @@ export default function UtilsProducts({ params }: { params: { storeId: string } 
   };
 
   const handleSendData = async () => {
-    if (!selectData) return;
-    if (!selectDataUtils) return;
+    console.log("mercedes benz");
+
+    // if (!selectData) return;
+    // if (!selectDataUtils) return;
 
     setIsLoading(true);
-    console.log(
-      selectData.map((prev) => ({
-        product: prev?._id,
-        price: prev.productPrice,
-      }))
-    );
+    let url = `http://localhost:5000/api/v1/tienda/rempleaceproducts/${storeId}`;
 
-    await patchEditVal(
-      `${processEnv.back}tienda/rempleaceproducts/${storeId}`,
-      selectData.map((prev) => ({
-        product: prev._id,
-        price: prev.productPrice,
-      })),
-
-      async () => {
-        await getStoreCurrent();
+    let send = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
       },
-      "Quieres Modificar los productos de la tienda?"
-    );
-    setIsLoading(false);
+      body: JSON.stringify(
+        selectData?.map((prev) => ({
+          product: prev?._id,
+          price: prev.productPrice,
+        }))
+      ),
+    });
+
+    await getStoreCurrent();
+
+    if (send.ok) {
+      setIsLoading(false);
+      console.log("hola mercedes benz esto funciono xdddddddd");
+    } else {
+      console.log("no funciona mercedes benz");
+    }
   };
-
-  // console.log(productsInStore);
-  // console.log(selectData);
-  // console.log(storeCurrent);
-
-  const [utils, setUtils] = useState();
 
   const handleUpdateUtilsProductSelect = (
     // index: number,
@@ -202,26 +205,7 @@ export default function UtilsProducts({ params }: { params: { storeId: string } 
               setProductsSelect={setSelectData}
               utils={setSelectData}
             />
-            {/* 
-            <ViewUtilsProducts
-              productsSelect={selectData}
-              setProductsSelect={setSelectData}
-              utils={setSelectData}
-            /> */}
 
-            {/* ViewUtilsProducts */}
-            {/* <input
-              type="number"
-              className="flex gap-2 w-32 text-center p-2 border rounded-xl outline-none ml-auto"
-              min={0}
-              onChange={(e) =>
-                handleUpdateUtilsProductSelect(
-                  // index,
-                  parseInt(e.target.value)
-                )
-              }
-              // value={product.productPrice ?? 0} */}
-            {/* /> */}
           </div>
         )}
 
